@@ -39,7 +39,7 @@ public class ImagesController : ControllerBase
     [NonAction]
     private async Task UploadFile(IFormFile img, int width, int height)
     {
-        Console.WriteLine("Inside the upload method");
+
         if (img is not {Length: > 0 }) return;
         
         var connection = _config["StorageConfig:BlobConnection"];
@@ -64,7 +64,7 @@ public class ImagesController : ControllerBase
         var url = await _blobManagement.UploadFile("images", name, fileBytes, connection);
         
         await SendMessageToTheQueue(url, name, width, height, "images");
-
+        Console.WriteLine("Image successfully uploaded");
     }
 
     [NonAction]
